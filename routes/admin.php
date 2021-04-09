@@ -12,14 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+define('PAGINATION_COUNT',10);
 Route::group(['middleware'=>'auth:admin'],function(){
  
-    Route::get('/','App\Http\Controllers\Admin\DashboardController@index');
+    Route::get('/','App\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard');
+
+    Route::group([],function (){
+        Route::get('/','App\Http\Controllers\LanguageController@index')->name('admin.languages');
+    });
 });
 
 Route::group(['middleware'=>'guest:admin'],function(){
     
-    Route::get('login','App\Http\Controllers\Admin\LoginController@getlogin');
+    Route::get('/login','App\Http\Controllers\Admin\LoginController@getlogin')->name('get.admin.login');
     Route::post('login','App\Http\Controllers\Admin\LoginController@login')->name('admin.login');
 
 });
